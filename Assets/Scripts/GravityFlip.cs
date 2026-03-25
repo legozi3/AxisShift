@@ -4,9 +4,9 @@ using UnityEngine.InputSystem;
 public class GravityFlip : MonoBehaviour
 {
     [Header("Settings")]
-    public float raycastDistance = 3f;      // how close you need to be to a wall
-    public float transitionSpeed = 5f;
-    public float gravityStrength = 9.81f;
+    public float raycastDistance = 3f;      //how close you need to be to a wall
+    public float transitionSpeed = 5f;      //how fast the transition is
+    public float gravityStrength = 9.81f;   //the strength of the gravity
     public Camera playerCamera;
 
     private Quaternion targetRotation;
@@ -31,7 +31,7 @@ public class GravityFlip : MonoBehaviour
 
     void HandleInput()
     {
-        //If an RMB input was detected, try to flip the gravity
+        //if an RMB input was detected, try to flip the gravity
         if (Mouse.current.rightButton.wasPressedThisFrame || Keyboard.current.spaceKey.wasPressedThisFrame)
         {
             TryFlipGravity();
@@ -75,7 +75,7 @@ public class GravityFlip : MonoBehaviour
             Time.deltaTime * transitionSpeed
         );
 
-        // Stop transitioning once we're close enough to the target
+        //stop transitioning once its close enough to the target
         if (Quaternion.Angle(transform.rotation, targetRotation) < 0.5f)
         {
             transform.rotation = targetRotation;
