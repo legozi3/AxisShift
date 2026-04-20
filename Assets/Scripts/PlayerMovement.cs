@@ -29,12 +29,12 @@ public class PlayerMovement : MonoBehaviour
     void FixedUpdate()
     {
         Move();
-        CheckGrounded();
+        //CheckGrounded();
     }
 
     void Move()
     {
-        // Read WASD keys
+        //reads if WASD is pressed
         float x = 0f;
         float z = 0f;
 
@@ -43,11 +43,11 @@ public class PlayerMovement : MonoBehaviour
         if (Keyboard.current.wKey.isPressed) z = 1f;
         if (Keyboard.current.sKey.isPressed) z = -1f;
 
-        // Move relative to where the player is facing
+        //moves the player to whatever direction was inputted
         Vector3 move = transform.right * x + transform.forward * z;
         Vector3 targetVelocity = move * moveSpeed;
 
-        // Preserve gravity velocity so gravity flipping works correctly
+        //makes sure the movement works on the other gravity directions
         Vector3 gravityDir = Physics.gravity.normalized;
         float gravityVelocity = Vector3.Dot(rb.linearVelocity, gravityDir);
 
@@ -56,24 +56,24 @@ public class PlayerMovement : MonoBehaviour
 
     void MouseLook()
     {
-        // Read mouse delta
+        //reads mouse delta
         Vector2 mouseDelta = Mouse.current.delta.ReadValue();
 
         float mouseX = mouseDelta.x * mouseSensitivity;
         float mouseY = mouseDelta.y * mouseSensitivity;
 
-        // Rotate player left/right
+        //rotates the player to match mouse movement
         transform.Rotate(Vector3.up * mouseX);
 
-        // Rotate camera up/down
+        //rotates the camera up or down
         verticalRotation -= mouseY;
         verticalRotation = Mathf.Clamp(verticalRotation, -90f, 90f);
         cameraTransform.localRotation = Quaternion.Euler(verticalRotation, 0f, 0f);
     }
     
-    void CheckGrounded()
+    /*void CheckGrounded()
     {
         Vector3 gravityDir = Physics.gravity.normalized;
         isGrounded = Physics.Raycast(transform.position, gravityDir, 1.1f);
-    }
+    }*/
 }
