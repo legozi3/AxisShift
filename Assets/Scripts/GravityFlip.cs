@@ -32,7 +32,7 @@ public class GravityFlip : MonoBehaviour
     void HandleInput()
     {
         //If an RMB input was detected, try to flip the gravity
-        if (Mouse.current.rightButton.wasPressedThisFrame)
+        if (Mouse.current.rightButton.wasPressedThisFrame || Keyboard.current.spaceKey.wasPressedThisFrame)
         {
             TryFlipGravity();
         }
@@ -68,6 +68,7 @@ public class GravityFlip : MonoBehaviour
 
     void SmoothTransition()
     {
+        GetComponent<PlayerMovement>().enabled = false;
         transform.rotation = Quaternion.Slerp(
             transform.rotation,
             targetRotation,
@@ -79,6 +80,7 @@ public class GravityFlip : MonoBehaviour
         {
             transform.rotation = targetRotation;
             isTransitioning = false;
+            GetComponent<PlayerMovement>().enabled = true;
         }
     }
 }
