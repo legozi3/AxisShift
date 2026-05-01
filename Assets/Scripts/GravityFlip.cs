@@ -8,6 +8,8 @@ public class GravityFlip : MonoBehaviour
     public float transitionSpeed = 5f;      //how fast the transition is
     public float gravityStrength = 9.81f;   //the strength of the gravity
     public Camera playerCamera;
+    
+    public static GravityDirection currentDirection = GravityDirection.Down;
 
     private Quaternion targetRotation;
     private bool isTransitioning = false;
@@ -60,9 +62,32 @@ public class GravityFlip : MonoBehaviour
 
             Vector3 newGravityDir = -wallNormal;
             Physics.gravity = newGravityDir * gravityStrength;
+            
+            currentDirection = GetDirectionFromVector(newGravityDir);
 
             targetRotation = Quaternion.FromToRotation(transform.up, wallNormal) * transform.rotation;
             isTransitioning = true;
+        }
+    }
+    
+    GravityDirection GetDirectionFromVector(Vector3 dir)
+    {
+        //rounds the vector so it doesn't cause floating point precision problems
+        Vector3 rounded = new Vector3(
+            Mathf.Round(dir.x),
+            Mathf.Round(dir.y),
+            Mathf.Round(dir.z)
+        );
+
+        switch (rounded)
+        {
+            case var d when d == Vector3.down:    return GravityDirection.Down;
+            case var d when d == Vector3.up:      return GravityDirection.Up;
+            case var d when d == Vector3.left:    return GravityDirection.Left;
+            case var d when d == Vector3.right:   return GravityDirection.Right;
+            case var d when d == Vector3.forward: return GravityDirection.Forward;
+            case var d when d == Vector3.back:    return GravityDirection.Back;
+            default:                                      return GravityDirection.Down;
         }
     }
 
