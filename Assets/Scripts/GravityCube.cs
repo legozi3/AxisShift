@@ -15,6 +15,7 @@ public class GravityCube : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        TryMatchGravity();
     }
 
     void Update()
