@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.XR;
@@ -15,6 +16,7 @@ public class GravityCube : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        rb.useGravity = false;
         TryMatchGravity();
     }
 
@@ -39,11 +41,13 @@ public class GravityCube : MonoBehaviour
 
         if (GravityFlip.currentDirection == GravityDirection.Down)
         {
-            rb.constraints = RigidbodyConstraints.FreezeAll;
+            rb.constraints = RigidbodyConstraints.None;
+            rb.AddForce(GetDirection(cubeDirection) * gravityStrength);
+            //Debug.Log("gravity strength: " + GetDirection(cubeDirection) * gravityStrength);
         }
         else
         {
-            rb.constraints = RigidbodyConstraints.None;
+            rb.constraints = RigidbodyConstraints.FreezeAll;
         }
     }
     
