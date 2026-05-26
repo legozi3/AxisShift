@@ -23,7 +23,6 @@ public class GravityCube : MonoBehaviour
     void Update()
     {
         HandleInput();
-        //rb.velocity = GetDirection(cubeDirection) * gravityStrength;
         
     }
 
@@ -38,12 +37,11 @@ public class GravityCube : MonoBehaviour
 
     void TryMatchGravity()
     {
-
-        if (GravityFlip.currentDirection == GravityDirection.Down)
+        if (GravityFlip.currentDirection == cubeDirection)
         {
             rb.constraints = RigidbodyConstraints.None;
-            rb.AddForce(GetDirection(cubeDirection) * gravityStrength);
-            //Debug.Log("gravity strength: " + GetDirection(cubeDirection) * gravityStrength);
+            rb.AddForce((GetDirection(cubeDirection) * gravityStrength), ForceMode.Acceleration);
+            Debug.Log("gravity strength: " + GetDirection(cubeDirection) * gravityStrength);
         }
         else
         {
