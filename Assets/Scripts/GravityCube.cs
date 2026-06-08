@@ -4,9 +4,8 @@ public class GravityCube : MonoBehaviour
 {
     [Header("Settings")]
     public float gravityStrength = 9.81f;
-    //public GravityDirection direction = GravityDirection.Down;
     
-    private GravityDirection cubeDirection = GravityDirection.Down;
+    public GravityDirection cubeDirection = GravityDirection.Down;
     private Rigidbody rb;
 
     void Start()
@@ -21,7 +20,7 @@ public class GravityCube : MonoBehaviour
 
         if (directionMatches)
         {
-            //addes gravity to the cube and makes it so it doesn't fly away if the player collides into it
+            //adds gravity to the cube and makes it so it doesn't fly away if the player collides into it
             rb.constraints = RigidbodyConstraints.FreezeRotation;
             Vector3 gravityForce = GetDirection(cubeDirection) * gravityStrength;
             rb.AddForce(gravityForce, ForceMode.Acceleration);

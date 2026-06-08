@@ -42,6 +42,7 @@ public class GravityFlip : MonoBehaviour
 
     void TryFlipGravity()
     {
+        if (CubePickup.isHoldingCube) return;
         Ray ray = new Ray(playerCamera.transform.position, playerCamera.transform.forward);
         RaycastHit hit;
 
