@@ -2,36 +2,19 @@ using UnityEngine;
 
 public class GravityColorManager : MonoBehaviour
 {
-    public Color downColor    = Color.blue;
-    public Color upColor      = Color.red;
-    public Color leftColor    = Color.green;
-    public Color rightColor   = Color.yellow;
-    public Color forwardColor = Color.cyan;
-    public Color backColor    = Color.magenta;
+    public GravityDirection facingDirection;
+    public Color activeColor = Color.red;
 
-    public Renderer[] objectsToColor; //the object I want to change of color of
+    private static readonly Color greyColor = new Color(0.5f, 0.5f, 0.5f);
+    private Renderer rend;
+
+    void Start()
+    {
+        rend = GetComponent<Renderer>();
+    }
 
     void Update()
     {
-        Color targetColor = GetColorForDirection(GravityFlip.currentDirection);
-
-        foreach (Renderer r in objectsToColor)
-        {
-            r.material.color = targetColor;
-        }
-    }
-
-    Color GetColorForDirection(GravityDirection dir)
-    {
-        switch (dir)
-        {
-            case GravityDirection.Down:    return downColor;
-            case GravityDirection.Up:      return upColor;
-            case GravityDirection.Left:    return leftColor;
-            case GravityDirection.Right:   return rightColor;
-            case GravityDirection.Forward: return forwardColor;
-            case GravityDirection.Back:    return backColor;
-            default:                       return downColor;
-        }
+        rend.material.color = (GravityFlip.currentDirection == facingDirection) ? activeColor : greyColor;
     }
 }
