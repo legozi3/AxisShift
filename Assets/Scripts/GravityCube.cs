@@ -1,51 +1,37 @@
-using System;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.XR;
 
 public class GravityCube : MonoBehaviour
 {
     [Header("Settings")]
-    public float gravityStrength = 9.81f;   //the strength of the gravity
+    public float gravityStrength = 9.81f;
     //public GravityDirection direction = GravityDirection.Down;
-
-    private GravityDirection cubeDirection = GravityDirection.Down;
     
+    private GravityDirection cubeDirection = GravityDirection.Down;
     private Rigidbody rb;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         rb.useGravity = false;
-        TryMatchGravity();
     }
 
-    void Update()
+    void FixedUpdate()
     {
-        HandleInput();
-        
-    }
+        bool directionMatches = GravityFlip.currentDirection == cubeDirection;
 
-    void HandleInput()
-    {
-        //if an RMB input was detected, try to match the gravity
-        if (Mouse.current.rightButton.wasPressedThisFrame || Keyboard.current.spaceKey.wasPressedThisFrame)
+        if (directionMatches)
         {
-            TryMatchGravity();
-        }
-    }
-
-    void TryMatchGravity()
-    {
-        if (GravityFlip.currentDirection == cubeDirection)
-        {
-            rb.constraints = RigidbodyConstraints.None;
-            rb.AddForce((GetDirection(cubeDirection) * gravityStrength), ForceMode.Acceleration);
-            Debug.Log("gravity strength: " + GetDirection(cubeDirection) * gravityStrength);
+            //addes gravity to the cube and makes it so it doesn't fly away if the player collides into it
+            rb.constraints = RigidbodyConstraints.FreezeRotation;
+            Vector3 gravityForce = GetDirection(cubeDirection) * gravityStrength;
+            rb.AddForce(gravityForce, ForceMode.Acceleration);
         }
         else
         {
+            //freezes everything so the cube cant be moved.
             rb.constraints = RigidbodyConstraints.FreezeAll;
+            rb.linearVelocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
         }
     }
     
