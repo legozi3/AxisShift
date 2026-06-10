@@ -7,6 +7,7 @@ public class PressurePlate : MonoBehaviour
     
     private bool isActivated = false;
 
+    //turns the door off
     void OnTriggerEnter(Collider col)
     {
         //gets the component of the collider object
@@ -17,6 +18,7 @@ public class PressurePlate : MonoBehaviour
         }
     }
 
+    //turns the door back on
     void OnTriggerExit(Collider col)
     {
         if (col.gameObject.GetComponent<GravityCube>() != null)
