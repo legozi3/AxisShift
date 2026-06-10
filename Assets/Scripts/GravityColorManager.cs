@@ -2,10 +2,11 @@ using UnityEngine;
 
 public class GravityColorManager : MonoBehaviour
 {
-    public GravityDirection facingDirection;
+    [Header("Settings")]
+    public GravityDirection desiredDirection;
     public Color activeColor = Color.red;
 
-    private static readonly Color greyColor = new Color(0.5f, 0.5f, 0.5f);
+    private static readonly Color defaultColor = new Color(0.5f, 0.5f, 0.5f);
     private Renderer rend;
 
     void Start()
@@ -15,6 +16,6 @@ public class GravityColorManager : MonoBehaviour
 
     void Update()
     {
-        rend.material.color = (GravityFlip.currentDirection == facingDirection) ? activeColor : greyColor;
+        rend.material.color = (GravityFlip.currentDirection == desiredDirection) ? activeColor : defaultColor;
     }
 }

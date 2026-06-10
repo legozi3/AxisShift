@@ -6,21 +6,22 @@ public class PressurePlate : MonoBehaviour
     
     private bool isActivated = false;
 
-    void OnCollisionEnter(Collision collision)
+    void OnCollisionEnter(Collision col)
     {
-        if (collision.gameObject.GetComponent<GravityCube>() != null)
+        //gets the component of the collider object
+        if (col.gameObject.GetComponent<GravityCube>() != null)
         {
             isActivated = true;
             connectedDoor.TryOpen(this);
         }
     }
 
-    void OnCollisionExit(Collision collision)
+    void OnCollisionExit(Collision col)
     {
-        if (collision.gameObject.GetComponent<GravityCube>() != null)
+        if (col.gameObject.GetComponent<GravityCube>() != null)
         {
             isActivated = false;
-            connectedDoor.ResetPlate(this);
+            connectedDoor.Reappear(this);
         }
     }
 

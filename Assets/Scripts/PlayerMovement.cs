@@ -29,7 +29,6 @@ public class PlayerMovement : MonoBehaviour
     void FixedUpdate()
     {
         Move();
-        //CheckGrounded();
     }
 
     void Move()
@@ -70,10 +69,4 @@ public class PlayerMovement : MonoBehaviour
         verticalRotation = Mathf.Clamp(verticalRotation, -90f, 90f);
         cameraTransform.localRotation = Quaternion.Euler(verticalRotation, 0f, 0f);
     }
-    
-    /*void CheckGrounded()
-    {
-        Vector3 gravityDir = Physics.gravity.normalized;
-        isGrounded = Physics.Raycast(transform.position, gravityDir, 1.1f);
-    }*/
 }

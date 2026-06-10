@@ -5,26 +5,25 @@ public class DoorController : MonoBehaviour
     public GravityDirection requiredDirection; //the direction required for the door to work
 
     [Header("Pressure Plates")]
-    public PressurePlate plateOne;
-    public PressurePlate plateTwo;
+    public PressurePlate plateOne; //leave both empty if connected to a button
+    public PressurePlate plateTwo; //leave empty if only one plate
     
-    public void TryOpen(PressurePlate callingPlate)
+    public void TryOpen(PressurePlate plate)
     {
-        if (GravityFlip.currentDirection == requiredDirection)
+        //return if gravity directions don't match
+        if (GravityFlip.currentDirection != requiredDirection) return;
+        
+        //checks for plateTwo if applicable
+        if (plateTwo != null)
         {
-            gameObject.SetActive(false);
+            if (plateOne.IsActivated() && plateTwo.IsActivated())
+                gameObject.SetActive(false);
         }
         else
         {
-            Debug.Log("Wrong gravity direction, can't open door.");
+            gameObject.SetActive(false);
         }
     }
-    
-    public void ResetPlate(PressurePlate callingPlate)
-    {
-        gameObject.SetActive(true);
-    }
-    
     public void TryOpen()
     {
         if (GravityFlip.currentDirection == requiredDirection)
@@ -36,4 +35,9 @@ public class DoorController : MonoBehaviour
             Debug.Log("Wrong gravity direction, can't open door.");
         }
     }
+    public void Reappear(PressurePlate plate)
+    {
+        gameObject.SetActive(true);
+    }
+
 }
