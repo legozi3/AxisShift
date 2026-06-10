@@ -2,11 +2,12 @@ using UnityEngine;
 
 public class PressurePlate : MonoBehaviour
 {
+    [Header("Setting")]
     public DoorController connectedDoor;
     
     private bool isActivated = false;
 
-    void OnCollisionEnter(Collision col)
+    void OnTriggerEnter(Collider col)
     {
         //gets the component of the collider object
         if (col.gameObject.GetComponent<GravityCube>() != null)
@@ -16,7 +17,7 @@ public class PressurePlate : MonoBehaviour
         }
     }
 
-    void OnCollisionExit(Collision col)
+    void OnTriggerExit(Collider col)
     {
         if (col.gameObject.GetComponent<GravityCube>() != null)
         {
